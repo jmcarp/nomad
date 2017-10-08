@@ -6,9 +6,11 @@ from flask_login import LoginManager
 from flask_mail import Mail
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+from flask_wtf.csrf import CSRFProtect
 from raven.contrib.flask import Sentry
 from .config import config
 
+csrf = CSRFProtect()
 bootstrap = Bootstrap()
 mail = Mail()
 db = SQLAlchemy()
@@ -31,6 +33,7 @@ def create_app(config_name):
     stream_handler = logging.StreamHandler()
     logger.addHandler(stream_handler)
 
+    csrf.init_app(app)
     bootstrap.init_app(app)
     mail.init_app(app)
     db.init_app(app)

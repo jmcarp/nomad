@@ -27,15 +27,17 @@ from .forms import (
     RiderForm,
 )
 from ..models import Carpool, Destination, RideRequest
-from .. import db
+from .. import csrf, db
 
 
-@pool_bp.route('/', methods=['GET', 'POST'])
+@pool_bp.route('/')
+@csrf.exempt
 def index():
     return render_template('index.html')
 
 
 @pool_bp.route('/carpools/find')
+@csrf.exempt
 def find():
     lat = request.args.get('lat')
     lon = request.args.get('lon')
